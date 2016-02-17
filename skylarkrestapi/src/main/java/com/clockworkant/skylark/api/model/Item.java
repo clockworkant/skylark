@@ -1,8 +1,5 @@
 package com.clockworkant.skylark.api.model;
 
-/**
- * Created by alec on 16/02/2016.
- */
 public class Item {
     protected String content_url;
     protected String content_type;
@@ -18,11 +15,11 @@ public class Item {
         return sb.toString();
     }
 
-    public String getContent_url() {
+    public String getContentUrl() {
         return content_url;
     }
 
-    public String getContent_type() {
+    public String getContentType() {
         return content_type;
     }
 

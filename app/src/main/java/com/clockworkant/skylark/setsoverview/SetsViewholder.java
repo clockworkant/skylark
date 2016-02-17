@@ -5,12 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.clockworkant.skylark.R;
 import com.clockworkant.skylark.api.model.SkylarkSet;
 import com.clockworkant.skylark.setdetail.SetDetailActivity;
 
-/**
- * Created by alec on 17/02/2016.
- */
 class SetsViewholder extends RecyclerView.ViewHolder {
 
     private final TextView title;
@@ -26,7 +24,7 @@ class SetsViewholder extends RecyclerView.ViewHolder {
                 v.getContext().startActivity(startIntent);
             }
         });
-        title = (TextView) itemView.findViewById(android.R.id.text1);
+        title = (TextView) itemView.findViewById(R.id.rv_item_text);
 
     }
 

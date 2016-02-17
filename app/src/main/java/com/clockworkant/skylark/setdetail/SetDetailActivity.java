@@ -4,14 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.clockworkant.skylark.R;
+import com.clockworkant.skylark.SkylarkApplication;
+import com.clockworkant.skylark.api.SkylarkClient;
+import com.clockworkant.skylark.api.model.Episode;
 import com.clockworkant.skylark.api.model.Item;
 import com.clockworkant.skylark.api.model.SkylarkSet;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class SetDetailActivity extends AppCompatActivity {
 
@@ -19,8 +27,7 @@ public class SetDetailActivity extends AppCompatActivity {
     private static final String EXTRA_TITLE = "extra.title";
     private static final String EXTRA_BODY = "extra.body";
     private static final String EXTRA_TEMP_IMAGE = "extra.temp.image";
-
-    private List<Item> items;
+    private SkylarkClient skylarkClient;
 
     public static Intent getStartIntent(Context context, SkylarkSet set) {
         Intent intent = new Intent(context, SetDetailActivity.class);
@@ -42,17 +49,34 @@ public class SetDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_list);
 
-        populateItems();
+        skylarkClient = SkylarkApplication.getInstance(getApplicationContext()).getSkylarkClient();
+        populateItems(skylarkClient);
         setSetTitle(getIntent().getStringExtra(EXTRA_TITLE));
         setSetBody(getIntent().getStringExtra(EXTRA_BODY));
     }
 
-    private void populateItems() {
-        ArrayList<ParcelableItem> parcelableArrayListExtra = getIntent().getParcelableArrayListExtra(EXTRA_ITEMS);
-        items = new ArrayList<Item>(parcelableArrayListExtra);
+    private void populateItems(SkylarkClient client) {
 
-        for (Item item : items) {
-            System.out.println(item.getContent_url());
+        RecyclerView recycleView = (RecyclerView) findViewById(R.id.setsdetail_recycler_view);
+
+        recycleView.setLayoutManager(new LinearLayoutManager(this));
+
+        final EpisodeAdapter adapter = new EpisodeAdapter(getApplicationContext());
+        recycleView.setAdapter(adapter);
+
+        ArrayList<ParcelableItem> parcelableArrayListExtra = getIntent().getParcelableArrayListExtra(EXTRA_ITEMS);
+
+        for (Item item : parcelableArrayListExtra) {
+            client.fetchEpisode(item)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Episode>() {
+                        @Override
+                        public void call(Episode episode) {
+                            adapter.add(episode);
+                            adapter.notifyItemInserted(adapter.getItemCount());
+                        }
+                    });
         }
     }
 

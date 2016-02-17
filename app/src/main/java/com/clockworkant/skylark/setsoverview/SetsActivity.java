@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.clockworkant.skylark.R;
+import com.clockworkant.skylark.SkylarkApplication;
 import com.clockworkant.skylark.api.SkylarkClient;
 import com.clockworkant.skylark.api.model.SkylarkSet;
 
@@ -17,10 +18,14 @@ import rx.schedulers.Schedulers;
 
 public class SetsActivity extends AppCompatActivity {
 
+    private SkylarkClient skylarkClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sets);
+
+        skylarkClient = SkylarkApplication.getInstance(getApplicationContext()).getSkylarkClient();
 
         RecyclerView recycleView = (RecyclerView) findViewById(R.id.sets_recycler_view);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
@@ -32,7 +37,8 @@ public class SetsActivity extends AppCompatActivity {
     }
 
     private void fetchSets(final SetsAdapter adapter) {
-        new SkylarkClient().fetchSets()
+
+        skylarkClient.fetchSets()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<SkylarkSet>>() {

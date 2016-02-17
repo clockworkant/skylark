@@ -3,16 +3,16 @@ package com.clockworkant.skylark.api.model;
 import java.util.List;
 
 public class SkylarkSet {
-    String uid;
-    String body;
-    String formatted_body;
-    boolean featured;
-    String quote;
-    String quoter;
-    String summary;
-    String temp_image;
-    String title;
-    List<Item> items;
+    private String uid;
+    private String body;
+    private String formatted_body;
+    private boolean featured;
+    private String quote;
+    private String quoter;
+    private String summary;
+    private String temp_image;
+    private String title;
+    private List<Item> items;
 
     @Override
     public String toString() {

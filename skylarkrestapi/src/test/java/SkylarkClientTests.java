@@ -4,7 +4,6 @@ import com.clockworkant.skylark.api.model.Item;
 import com.clockworkant.skylark.api.model.SkylarkSet;
 
 import org.junit.Test;
-import org.mockito.Mock;
 
 import java.util.List;
 
@@ -39,8 +38,6 @@ public class SkylarkClientTests {
                 System.err.println(throwable.getMessage());
             }
         });
-
-
     }
 
     @Test
@@ -50,8 +47,8 @@ public class SkylarkClientTests {
             public void call(List<SkylarkSet> skylarkSets) {
                 for (SkylarkSet set : skylarkSets) {
                     for (Item item : set.getItems()) {
-                        System.out.println(item.getContent_type());
-                        System.out.println(item.getContent_url());
+                        System.out.println(item.getContentType());
+                        System.out.println(item.getContentUrl());
                     }
                 }
             }
@@ -66,7 +63,7 @@ public class SkylarkClientTests {
     @Test
     public void testFetchEpisode() throws Exception {
         Item item = mock(Item.class);
-        when(item.getContent_url()).thenReturn("/api/episodes/film_7a99b420e91e4513ac56cf12f3fb82f8/");
+        when(item.getContentUrl()).thenReturn("/api/episodes/film_7a99b420e91e4513ac56cf12f3fb82f8/");
         skylarkClient.fetchEpisode(item).subscribe(new Action1<Episode>() {
             @Override
             public void call(Episode episode) {

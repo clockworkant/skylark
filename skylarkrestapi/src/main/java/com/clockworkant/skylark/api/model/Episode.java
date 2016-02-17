@@ -3,13 +3,10 @@ package com.clockworkant.skylark.api.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by alec on 17/02/2016.
- */
 public class Episode {
-    String title;
-    String subtitle;
-    List<String> image_urls;
+    private String title;
+    private String subtitle;
+    private List<String> image_urls;
 
     public String getTitle() {
         return title;

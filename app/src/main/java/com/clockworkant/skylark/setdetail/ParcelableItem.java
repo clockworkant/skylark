@@ -2,14 +2,15 @@ package com.clockworkant.skylark.setdetail;
 
 import com.clockworkant.skylark.api.model.Item;
 
-/**
- * Created by alec on 17/02/2016.
+/****
+ * This class is a parcelable wrapper around item. It exists so that the domain items are not
+ * required to be parcelable
  */
 class ParcelableItem extends Item implements android.os.Parcelable {
 
     public ParcelableItem(Item item) {
-        this.content_url = item.getContent_url();
-        this.content_type = item.getContent_type();
+        this.content_url = item.getContentUrl();
+        this.content_type = item.getContentType();
         this.position = item.getPosition();
     }
 

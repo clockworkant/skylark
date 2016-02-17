@@ -6,14 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.clockworkant.skylark.R;
 import com.clockworkant.skylark.api.model.SkylarkSet;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by alec on 17/02/2016.
- */
 class SetsAdapter extends RecyclerView.Adapter<SetsViewholder> {
 
     private final LayoutInflater layoutInflater;
@@ -26,7 +24,7 @@ class SetsAdapter extends RecyclerView.Adapter<SetsViewholder> {
 
     @Override
     public SetsViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+        View v = layoutInflater.inflate(R.layout.recyclerview_item, parent, false);
         return new SetsViewholder(v);
     }
 
